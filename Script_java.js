@@ -7,23 +7,24 @@ if(!('Wavegen' in this) || !('Scope' in this)) throw "Please open a Scope and a 
 var high = 5;
 var low = 0;
 var fs = 4000;
-var sec = 30;
+var sec = 60;
 
 var TimeLed = 3; //Sec
 var incrementLed = 0;
-var MaxClasses = 3; // index modolo(MaxClasses) = {0 = resting, 1 = upp, 2 = down}
+var MaxClasses = 3; // index modolo(MaxClasses) = {0 = resting, 1 = upp, 2 = Statick hold, 3 = down}
 //#######################################
 
 // setting all variables for script
 var time = new Date();
 var date = time.getUTCFullYear()+"_"+time.getUTCMonth()+"_"+time.getUTCDate();
 print(date); 
-var TestSubjectID =  + Tool.getText("TestSubject ID","ID");
+var TestSubjectID =   Tool.getText("TestSubject ID","ID");
+var TestSubjectARM =   Tool.getText("Which arm ","R=Right or L= Left");
 var DataPath = "C:/Users/Elliot/Desktop/åk3/EXO2/Data/DataIndex.txt";
 var index = File(DataPath).read(3);
-var path = "C:/Users/Elliot/Desktop/åk3/EXO2/Data/"+date+"_TestSub"+TestSubjectID+"_"+index+".csv";
+var path = "C:/Users/Elliot/Desktop/åk3/EXO2/Data/"+date+"_TestSub"+TestSubjectID+"_"+"ARM_"+TestSubjectARM+"_"+index+".csv";
 var file = File(path);
-var text = "TID;AMP Channel 1;AMP Channel 2;CLASS\n";
+var text = "TID(SEC);AMP(V) Channel 1;AMP(V) Channel 2;CLASS\n";
 var remaining = 0;
 var lable = 0;
 
@@ -51,7 +52,7 @@ Scope1.Time.Mode.text= "Record";//record setting of the scope so that the values
  Wavegen.Channel1.Simple.Offset.value = low;
  Wavegen.Channel2.Simple.Offset.value = low;
 
- if(!wait(1)) throw "Canceled" // for time to config 
+// if(!wait(1)) throw "Canceled" // for time to config 
 
 for(var i = 0; i < round(sec/TimeLed); i++){
 

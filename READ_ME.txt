@@ -9,3 +9,5 @@ To run the scrip:
 Notes:
 	Let the file "DataIndex.txt" start with 100 and not 001. This is because the script will be smart and se the file as integers and not as a text file. This leas all the 
 	zeros before an value is removed.
+
+	When changing the savefile path the path needs to have "/" and not "\"
