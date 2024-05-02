@@ -11,7 +11,7 @@ var sec = 60;
 
 var TimeLed = 3; //Sec
 var incrementLed = 0;
-var MaxClasses = 3; // index modolo(MaxClasses) = {0 = resting, 1 = upp, 2 = Statick hold, 3 = down}
+var MaxClasses = 4 ; // index modolo(MaxClasses) = {0 = resting, 1 = upp, 2 = Statick hold, 3 = down}
 //#######################################
 
 // setting all variables for script
@@ -24,7 +24,7 @@ var DataPath = "C:/Users/Elliot/Desktop/åk3/EXO2/Data/DataIndex.txt";
 var index = File(DataPath).read(3);
 var path = "C:/Users/Elliot/Desktop/åk3/EXO2/Data/"+date+"_TestSub"+TestSubjectID+"_"+"ARM_"+TestSubjectARM+"_"+index+".csv";
 var file = File(path);
-var text = "TID(SEC);AMP(V) Channel 1;AMP(V) Channel 2;CLASS\n";
+var text = "Waight:"+Tool.getText("Waight "," KG")+"KG\nWaight up or down:"+Tool.getText("Are the waight going up or down? "," up or down")+"\nSample Freq:"+fs+"Hz\n"+"TID(SEC);AMP(V) Channel 1;AMP(V) Channel 2;CLASS\n";
 var remaining = 0;
 var lable = 0;
 
