@@ -58,6 +58,7 @@ for(var i = 0; i < round(sec/TimeLed); i++){
 
  
       remaining = i%MaxClasses;
+    print(remaining);
       if(remaining == 1)
       {
         lable = 1;
