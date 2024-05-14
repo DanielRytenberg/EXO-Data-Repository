@@ -15,7 +15,6 @@ int main() {
 
     char line[MAX_LINE_LENGTH];
     char new_label[MAX_LINE_LENGTH];
-    char *space_position;
     char newline[MAX_LINE_LENGTH];
     int sec,lable = 0,i = 0,fs = 4000;
 
@@ -35,7 +34,7 @@ int main() {
            // Find the length of the string7
 
 
-             int length = 0;
+            int length = 0;
             while (line[length] != '\n') {
                 if(length != 0)
                     newline[length-1] = line[length-1];
@@ -43,19 +42,10 @@ int main() {
             }
             newline[length] = '\0';
            
-            // labeling
-            if(i%(sec*fs) == 0 && i != 0)
-            {
-                lable = (1+lable)%4;
-                 printf("%d\n",lable);
-            }
-
-            i++;
 
             sprintf(new_label, "%d", lable);
-
-            //strcat(newline,new_label);
-            strcat(newline,"\0"); 
+            strcat(newline,new_label);
+           // strcat(newline,"\0"); 
            // printf("%s\n",new_label);
 
              // print the last character
@@ -63,6 +53,17 @@ int main() {
                 //fprintf(file,"%s",newline);
                 printf("last char:%s\n",newline);
             }
+
+
+            i++;
+            // labeling
+            if(i%(sec*fs) == 0)
+            {
+                lable = (1+lable)%4;
+               //  printf("%d\n",lable);
+            }
+
+
      }
 
     fclose(file);
