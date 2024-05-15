@@ -105,7 +105,7 @@ int main() {
     char startLines[MAX_LINE_LENGTH];
     int sec,lable,lableFrequency,i = 0,fs = 4000;
     char *direction;
-    for(int currentPoint = 228; currentPoint <= 260; currentPoint++)
+    for(int currentPoint = 243; currentPoint <= 260; currentPoint++)
     {
 
         strcpy(line,"");
