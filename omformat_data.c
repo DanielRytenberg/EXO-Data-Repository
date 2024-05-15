@@ -6,27 +6,129 @@
 
 #define MAX_LINE_LENGTH 100
 
-int main() {
-    const char path[] = "2024_4_6_TestSub20_ARM_L_106.csv";
+void insertIntToStr(char* str, int adressStart, int adressStop, int insert)
+{
+    //printf("Start insert\n");
+    char strToUse[MAX_LINE_LENGTH];
+    strcpy(strToUse, str);
+
+    char leftOverStr[MAX_LINE_LENGTH];
+    strcpy(leftOverStr, &(strToUse[adressStop]));
+    char insertStr[MAX_LINE_LENGTH];
+
+    strToUse[adressStart] = '\0';
+    sprintf(insertStr,"%d",insert);
+    strcat(strToUse,insertStr);
+    strcat(strToUse,leftOverStr);
+
     
-    FILE *file = fopen(path, "r+");
+    strcpy(str, strToUse);
+    //printf(strToUse);
+    //printf("\n");
+}
+
+FILE* pathFinder(int* months,int*  days, int currentPoint,char* location, char* openingType, char* saveLocation)
+{
+    printf("Start Pathfinder\n");
+    FILE *file;
+    char path[MAX_LINE_LENGTH];
+    char temp[MAX_LINE_LENGTH];
+    strcpy(path,"2024_x_x_TestSubxx_ARM_x_xxx.csv");
+
+    
+    insertIntToStr(path,strlen(path)-7,strlen(path)-4,currentPoint);
+
+    for(int month = months[0]; month <= months[1]; month++)
+    {
+        insertIntToStr(path,5,6,month);
+        
+
+        
+        for(int day = days[0]; day <= days[1]; day++)
+        {
+            insertIntToStr(path,7,strlen(path)-24,day);
+            
+            
+                
+            for(char arm = 0; arm <= 1; arm++)
+            {
+                if(arm)
+                {
+                    path[strlen(path)-9] = 'L';
+                }
+                else
+                {
+                    path[strlen(path)-9] = 'R';
+                }
+                
+                for(int group = 1; group <= 2; group++)
+                {
+                    for(int subject = 0; subject < 4; subject++)
+                    {
+                        insertIntToStr(path,strlen(path)-16,strlen(path)-14,(group*10)+subject);
+
+                        strcpy(temp,location);
+                        strcat(temp,path);
+                        file = fopen(temp, openingType);
+                        if (file != NULL)
+                        {
+                            strcpy(temp,"Fixed_Data\\");
+                            strcat(temp,path);
+                            strcpy(saveLocation, temp);
+                            return file;
+                        }                      
+                    }
+
+                }
+            }
+        }
+    }
+
+    printf("End Pathfinder\n");
+    return NULL;
+}
+
+int main() {
+    printf("Start\n");
+
+    char saveLocation[MAX_LINE_LENGTH];
+    int days[2];
+    days[0] = 0;
+    days[1] = 30;
+    int months[2];
+    months[0] = 4;
+    months[1] = 4;
+    FILE *file = pathFinder(months,days,106, "", "r+", saveLocation);
     if (file == NULL) {
         perror("Error opening file");
         return 1;
     }
-    FILE *save = fopen("Save", "w");
+    else
+    {
+        printf("Found file\n");
+    }
+
+    printf(saveLocation);
+    printf("\n");
+    FILE *save = fopen("sav", "w");
     if (save == NULL) {
         perror("Error opening file");
         return 1;
+    }
+    else
+    {
+        printf("Found save location\n");
     }
     printf("Start\n");
 
     char line[MAX_LINE_LENGTH];
     char new_label[MAX_LINE_LENGTH];
     char newline[MAX_LINE_LENGTH];
-    int sec,lable,lableFrequency = 0,i = 0,fs = 4000;
     char startLines[MAX_LINE_LENGTH];
+    int sec,lable,lableFrequency = 0,i = 0,fs = 4000;
     char *direction;
+
+    printf("variables made\n");
 
     // skip 5 first lines and save sec and direction
     for (int skip = 0; skip < 5; skip++) {
@@ -43,10 +145,10 @@ int main() {
             lableFrequency = sec*fs;
         }
         strcat(startLines,line);
-        //printf("%s",line);
+        printf("%s",line);
     }
     //printf("LableFreq is:%d\n", lableFrequency);
-    //printf(startLines);
+    printf(startLines);
 
     //Save the first lines to the doccument
     fprintf(save,startLines);
@@ -71,9 +173,9 @@ int main() {
             while (line[length] != '\n') {
                 if(length != 0)
                     newline[length-1] = line[length-1];
-             length++;
+                length++;
             }
-            newline[length - 1] = '\0';
+            newline[length-1] = '\0';
             
             /*
             if(length > 0)
@@ -116,7 +218,7 @@ int main() {
 
 
     }
-    printf("End");
+    printf("End\n");
 
     fclose(file);
     
